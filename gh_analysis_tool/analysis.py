@@ -24,13 +24,13 @@ def main():
     '-h', '--help'
 )
 @click.option(
-    '-i', '--input', help='The yml/json file to extract from', required=True
+    '-n', '--num_to_search', help='The number of repositories to inspect.', required=True
 )
 @click.option(
-    '-g', '--github_access_token', help='Your personal access token from Github', required=True
+    '-g', '--github_access_token', help='Your personal access token from Github.', required=True
 )
 def analyze(**kwargs):
-    num_to_return = int(kwargs.get('input', '0'))
+    num_to_return = int(kwargs.get('num_to_search', '0'))
     github_access_token = kwargs.get('github_access_token', '')
     if num_to_return > 25:
         logging.error('The limit is 25')

@@ -1,6 +1,6 @@
 import unittest
 
-from gh_analysis_tool.__main__ import calculate_unused_dep_scores
+from gh_analysis_tool.analysis import calculate_unused_dep_scores
 
 
 def test_calculate_unused_dep_scores():

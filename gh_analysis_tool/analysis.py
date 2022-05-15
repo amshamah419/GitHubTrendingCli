@@ -30,6 +30,13 @@ def main():
     '-g', '--github_access_token', help='Your personal access token from Github.', required=True
 )
 def analyze(**kwargs):
+    """
+    Analyze the given number of repositories
+    :param kwargs:
+    - n: The number of repositories to inspect
+    - g: The Github access token
+    :return: String printed in CLI containing the results.
+    """
     num_to_return = int(kwargs.get('num_to_search', '0'))
     github_access_token = kwargs.get('github_access_token', '')
     if num_to_return > 25:
@@ -51,6 +58,9 @@ def analyze(**kwargs):
 
 
 class options:
+    """
+    This is a dirty way of using the pip-check-reqs package.
+    """
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
         self.requirements_filename = None
@@ -75,8 +85,8 @@ class options:
 def aggregate_score(score: int) -> str:
     """
     Aggregate the scores
-    :param score:
-    :return:
+    :param score: Given sum of scores from other testing metrics
+    :return: String representing the aggregated threat score
     """
     if score == 0:
         return 'Low'
@@ -90,8 +100,8 @@ def aggregate_score(score: int) -> str:
 def calculate_unused_dep_scores(deps: list) -> int:
     """
     Calculate the risk score based on dependencies
-    :param deps:
-    :return:
+    :param deps: List of dependencies
+    :return: Risk score
     """
     items_in_deps = len(deps)
     if items_in_deps == 0:
@@ -106,8 +116,8 @@ def calculate_unused_dep_scores(deps: list) -> int:
 def dir_contains_requirements(dirpath: str) -> bool:
     """
     Check if the directory contains a requirements.txt
-    :param dirpath:
-    :return:
+    :param dirpath: Path to the temp directory
+    :return: True if requirements.txt is found, False otherwise
     """
     return 'requirements.txt' in os.listdir(dirpath)
 
@@ -126,8 +136,8 @@ def prepare_options(dirpath: str) -> options:
 def get_github_trending_results(num_to_return: int):
     """
     Get the found_repos from github
-    :param num_to_return:
-    :return:
+    :param num_to_return: The number of repositories to return
+    :return: List of found repositories
     """
 
     found_repos = fetch_repos('python', 'en')
@@ -135,6 +145,12 @@ def get_github_trending_results(num_to_return: int):
 
 
 def get_repo_info(full_repo_name: str, github_client: github.Github) -> dict:
+    """
+    Get the repo info from github
+    :param full_repo_name: The full name of the repository
+    :param github_client: The github client
+    :return: dict containing the repo info
+    """
     repository = github_client.get_repo(full_repo_name)
     clone_url = repository.clone_url
     logging.info(f'Fetching {full_repo_name} - {clone_url}')

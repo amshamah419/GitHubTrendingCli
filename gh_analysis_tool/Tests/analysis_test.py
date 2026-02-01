@@ -1,6 +1,5 @@
 import os
 import tempfile
-from unittest.mock import MagicMock
 from gh_analysis_tool.analysis import (
     calculate_unused_dep_scores,
     aggregate_score,
